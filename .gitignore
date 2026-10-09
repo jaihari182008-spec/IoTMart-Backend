@@ -1,0 +1,6 @@
+build/
+**/build/
+*.exe
+.env
+.env.*
+!.env.example
