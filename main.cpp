@@ -22,7 +22,7 @@ static int getPortFromEnv()
         }
     }
 
-    return 18080;
+    return 10000;
 }
 
 int main()

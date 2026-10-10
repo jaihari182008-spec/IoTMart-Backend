@@ -18,9 +18,12 @@ add_executable(iotmart_server
     database.cpp
 )
 
+target_include_directories(iotmart_server PRIVATE ${PQXX_INCLUDE_DIRS})
+
 target_link_libraries(iotmart_server PRIVATE
     PkgConfig::PQXX
     OpenSSL::SSL
     OpenSSL::Crypto
     Threads::Threads
 )
+

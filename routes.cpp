@@ -167,6 +167,37 @@ static crow::json::wvalue productToJson(
 void registerRoutes(IoTMartApp& app)
 {
     // ========================================================
+    // HEALTH CHECK
+    // ========================================================
+
+    CROW_ROUTE(app, "/health")
+    .methods(
+        crow::HTTPMethod::Get,
+        crow::HTTPMethod::Options
+    )
+    ([](const crow::request& req)
+    {
+        if (req.method == crow::HTTPMethod::Options)
+        {
+            return jsonResponse(
+                204,
+                crow::json::wvalue{}
+            );
+        }
+
+        crow::json::wvalue body;
+
+        body["status"] = "ok";
+        body["message"] = "IoTMart API is running";
+
+        return jsonResponse(
+            200,
+            std::move(body)
+        );
+    });
+
+
+    // ========================================================
     // TEST
     // ========================================================
 
