@@ -57,7 +57,7 @@ int main()
     std::cout << "Starting server..." << std::endl;
 
     // Start server
-    app.port(18080).multithreaded().run();
+    app.port(port).bindaddr("0.0.0.0").multithreaded().run();
 
     std::cout << "Server run() returned." << std::endl;
 
