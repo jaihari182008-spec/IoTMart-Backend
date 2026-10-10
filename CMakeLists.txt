@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.15)
 
 project(IoTMartBackend CXX)
@@ -5,9 +6,11 @@ project(IoTMartBackend CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(libpqxx CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(PQXX REQUIRED IMPORTED_TARGET libpqxx)
 
 add_executable(iotmart_server
     main.cpp
@@ -16,14 +19,8 @@ add_executable(iotmart_server
 )
 
 target_link_libraries(iotmart_server PRIVATE
-    libpqxx::pqxx
+    PkgConfig::PQXX
     OpenSSL::SSL
     OpenSSL::Crypto
     Threads::Threads
 )
-
-# Notes:
-# - crow_all.h is a header-only single-file include, no linking needed.
-# - Build:  mkdir build && cd build && cmake .. && make
-# - Run:    ./iotmart_server   (reads DB_HOST, DB_PORT, DB_NAME, DB_USER,
-#                                DB_PASSWORD, PORT from environment)
